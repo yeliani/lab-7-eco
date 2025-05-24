@@ -1,4 +1,6 @@
 int LED1 = 3;
+int LED2 = 2;
+int LED3 = 4;
 int POTEN = A0;
 int POTEN2 = A4;
 int potValue;
@@ -13,6 +15,8 @@ int btnValue;
 
 void setup() {
   pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
   pinMode(btn, INPUT_PULLUP);
   pinMode(POTEN, INPUT);
   pinMode(POTEN2, INPUT);
@@ -33,16 +37,46 @@ void loop() {
   
 
   if (Serial.available() > 0) {
-    String message = Serial.readStringUntil('\n');
-    if (message.equals("ON")) {
-      digitalWrite(LED1, HIGH);
-    } else if (message.equals("OFF")) {
-      digitalWrite(LED1, LOW);
-    } else {
-      // int sensorValue1 = message.toInt();
-      // analogWrite(LED1, sensorValue1);
-    }
+  String message = Serial.readStringUntil('\n');
+
+  if (message.equals("emotion:calm")) {
+    playEmotion("calm");
+  } else if (message.equals("emotion:angry")) {
+    playEmotion("angry");
+  } else if (message.equals("emotion:love")) {
+    playEmotion("love");
+  } else if (message.equals("OFF")) {
+    digitalWrite(LED1, LOW);
   }
+}
 
   delay(100);
+}
+
+void playEmotion(String emotion) {
+  if (emotion == "calm") {
+    blinkLed(LED1, 800);
+  } else if (emotion == "angry") {
+    blinkLed(LED1, 150);
+  } else if (emotion == "love") {
+    heartbeatPattern(LED1);
+  }
+}
+
+void blinkLed(int pin, int delayTime) {
+  for (int i = 0; i < 10; i++) {
+    digitalWrite(pin, HIGH);
+    delay(delayTime);
+    digitalWrite(pin, LOW);
+    delay(delayTime);
+  }
+}
+
+void heartbeatPattern(int pin) {
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(pin, HIGH); delay(200);
+    digitalWrite(pin, LOW);  delay(100);
+    digitalWrite(pin, HIGH); delay(200);
+    digitalWrite(pin, LOW);  delay(600);
+  }
 }

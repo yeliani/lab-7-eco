@@ -12,6 +12,7 @@ app.use(express.json()); // utility to process JSON in requests
 app.use(cors()); // utility to allow clients to make requests from other hosts or ips
 const httpServer = createServer(app); // Explicity creates an HTTP server from the Express app
 app.use("/app1", express.static(path.join(__dirname, "../client"))); // Serves static files from the client directory
+app.use("/app2", express.static(path.join(__dirname, "../client2"))); // Serves static files from the client directory
 
 // --------------- SOCKET CONFIG---------------------
 
@@ -97,6 +98,12 @@ io.on("connection", (socket) => {
   });
 });
 
+// --------------- SEND EMOTION ---------------------
+socket.on("emotion", (emotion) => {
+  port.write(`emotion:${emotion}\n`, (err) => {
+    if (err) console.log("Error on write", err.message);
+  });
+});
 // --------------- START SERVER ---------------------
 
 httpServer.listen(5050, () => {

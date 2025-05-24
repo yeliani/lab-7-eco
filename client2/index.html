@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WEB CONTROLLER</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(255, 255, 255);
+    }
+
+     h1 {
+      color: #ff69b4;
+    }
+    button, select, input[type="color"] {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1em;
+      cursor: pointer;
+      background-color: #ffe4e1;
+      color: #333;
+      transition: background-color 0.3s ease;
+    }
+    button:hover, select:hover {
+      background-color: #ffb6c1;
+    }
+    .emoji-label {
+      font-size: 1.2em;
+      margin-right: 8px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>LAB ARDUINO PARTE DOS</h1>
+
+  <h3>🌟 Control de Emociones con LEDs 🌟</h3>
+
+  <div>
+    <label class="emoji-label">🎭 Emoción:</label>
+    <select onchange="setEmotion(this.value)">
+      <option value="">Selecciona una emoción</option>
+      <option value="calm">😊 Tranquilo</option>
+      <option value="angry">😠 Enojado</option>
+      <option value="love">😍 Enamorado</option>
+    </select>
+  </div>
+
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
