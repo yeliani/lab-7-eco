@@ -2,7 +2,7 @@ int LED1 = 3;
 int LED_ROJO = 2;
 int LED_VERDE = 9;
 int LED_AZUL = 10;
-int LED3 = 4;
+int LED3 = 6;
 int POTEN = A0;
 int POTEN2 = A4;
 int potValue;
@@ -29,6 +29,7 @@ void setup() {
   analogWrite(LED_ROJO, 0);
   analogWrite(LED_VERDE, 0);
   analogWrite(LED_AZUL, 0);
+  analogWrite(LED3, 0);
 }
 
 void loop() {
@@ -47,6 +48,13 @@ void loop() {
   if (Serial.available()) {
   message = Serial.readStringUntil('\n');
   message.trim();
+ 
+ if (message.startsWith("led3:")) {
+      int value = message.substring(5).toInt();
+      value = constrain(value, 0, 255); // Asegurar valor válido
+      analogWrite(LED3,255 -  value);
+    }
+
 
   if (message != currentEmotion) {
     currentEmotion = message;

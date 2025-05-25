@@ -108,6 +108,13 @@ socket.on("semaforo", (color) => {
     }
   });
 });
+
+socket.on("led3-intensity", (value) => {
+  port.write(`led3:${value}\n`, (err) => {
+    if (err) console.log("Error on write", err.message);
+  });
+  
+});
 });
 
 

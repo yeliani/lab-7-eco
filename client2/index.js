@@ -8,3 +8,11 @@ function setEmotion(emotion) {
 function setLight(color) {
   socket.emit("semaforo", color);
 }
+
+const slider = document.getElementById("slider");
+const valor = document.getElementById("valueLabel");
+
+slider.addEventListener("input", () => {
+  valor.textContent = slider.value;
+  socket.emit("led3-intensity", parseInt(slider.value));
+});
