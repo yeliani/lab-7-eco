@@ -22,7 +22,6 @@ const io = new Server(httpServer, {
     origin: "*", // Allow requests from any origin
   },
 }); // Creates a WebSocket server, using the same HTTP server as the Express app and listening on the /real-time path
-
 // --------------- SERIAL PORT CONFIG---------------------
 
 SerialPort.list().then((ports) => console.log("ports", ports)); // this is for list all available devices connected
@@ -96,14 +95,22 @@ io.on("connection", (socket) => {
       return true;
     });
   });
-});
-
-// --------------- SEND EMOTION ---------------------
+  // --------------- SEND EMOTION ---------------------
 socket.on("emotion", (emotion) => {
   port.write(`emotion:${emotion}\n`, (err) => {
     if (err) console.log("Error on write", err.message);
   });
 });
+socket.on("semaforo", (color) => {
+  port.write(`color:${color}\n`, (err) => {
+    if (err) {
+      console.log("Error on write", err.message);
+    }
+  });
+});
+});
+
+
 // --------------- START SERVER ---------------------
 
 httpServer.listen(5050, () => {
